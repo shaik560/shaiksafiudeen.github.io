@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaik Safiudeen — UI/UX Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #050818;
+    color: #e8f4ff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; }
+  .orb1 { width: 420px; height: 420px; background: #7c3aed; top: -100px; left: -80px; animation: orbFloat 8s ease-in-out infinite; }
+  .orb2 { width: 320px; height: 320px; background: #06b6d4; top: 200px; right: -60px; animation: orbFloat 10s ease-in-out infinite reverse; }
+  .orb3 { width: 280px; height: 280px; background: #ec4899; bottom: 100px; left: 30%; animation: orbFloat 12s ease-in-out infinite 2s; }
+  .orb4 { width: 200px; height: 200px; background: #3b82f6; bottom: -50px; right: 20%; animation: orbFloat 9s ease-in-out infinite 1s; }
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(20px, -30px) scale(1.05); }
+    66%       { transform: translate(-15px, 20px) scale(0.95); }
+  }
+
+  .grid-lines {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(rgba(124,58,237,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6,182,212,0.07) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .content { position: relative; z-index: 1; }
+
+  /* ── NAV ─────────────────────────────────────── */
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 48px;
+    background: rgba(255,255,255,0.03);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(124,58,237,0.25);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.1em;
+    background: linear-gradient(90deg, #a78bfa, #22d3ee);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: rgba(200,220,255,0.6); text-decoration: none;
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #22d3ee; }
+  .nav-btn {
+    background: linear-gradient(135deg, rgba(124,58,237,0.4), rgba(6,182,212,0.3));
+    border: 1px solid rgba(124,58,237,0.5);
+    color: #e8f4ff; padding: 10px 24px; border-radius: 50px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+  }
+  .nav-btn:hover { border-color: #22d3ee; box-shadow: 0 0 20px rgba(34,211,238,0.3); }
+
+  /* ── GLASS HELPERS ───────────────────────────── */
+  .glass {
+    background: rgba(255,255,255,0.04);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+  }
+  .glass-purple {
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 20px;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+  .glass-cyan {
+    background: rgba(6,182,212,0.08);
+    border: 1px solid rgba(6,182,212,0.3);
+    border-radius: 20px;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+
+  /* ── HERO ────────────────────────────────────── */
+  .hero {
+    min-height: calc(100vh - 66px);
+    display: flex; align-items: center;
+    padding: 60px 48px;
+  }
+  .hero-inner {
+    max-width: 1100px; width: 100%; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 320px; gap: 60px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.3);
+    color: #22d3ee; padding: 6px 16px; border-radius: 50px;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero-badge::before {
+    content: ''; width: 7px; height: 7px;
+    background: #22d3ee; border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+  .hero-name {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2.8rem, 5vw, 4.8rem); font-weight: 900;
+    line-height: 1; letter-spacing: -0.02em; margin-bottom: 8px;
+  }
+  .hero-name .g1 {
+    background: linear-gradient(90deg, #a78bfa 0%, #22d3ee 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-name .g2 {
+    background: linear-gradient(90deg, #22d3ee 0%, #ec4899 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-title {
+    font-family: 'Orbitron', monospace; font-size: 0.95rem;
+    color: #a78bfa; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero-desc {
+    color: rgba(200,220,255,0.65); font-size: 1rem; line-height: 1.75;
+    max-width: 480px; margin-bottom: 36px;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-glow {
+    background: linear-gradient(135deg, #7c3aed, #06b6d4);
+    color: white; padding: 13px 30px; border-radius: 50px;
+    font-size: 0.88rem; font-weight: 600; letter-spacing: 0.05em;
+    border: none; cursor: pointer; transition: all 0.25s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-glow:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,0.5); }
+  .btn-outline {
+    background: transparent; border: 1px solid rgba(34,211,238,0.4);
+    color: #22d3ee; padding: 13px 30px; border-radius: 50px;
+    font-size: 0.88rem; font-weight: 600; letter-spacing: 0.05em;
+    cursor: pointer; transition: all 0.25s;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { border-color: #22d3ee; box-shadow: 0 0 20px rgba(34,211,238,0.2); background: rgba(34,211,238,0.07); }
+
+  .hero-card { padding: 32px; text-align: center; }
+  .avatar-ring {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed, #06b6d4, #ec4899);
+    padding: 3px; margin: 0 auto 24px;
+  }
+  .avatar-inner {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: #0d1130;
+    display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
+  }
+  .hero-location {
+    font-family: 'Orbitron', monospace; font-size: 0.85rem;
+    color: rgba(200,220,255,0.7); letter-spacing: 0.08em;
+  }
+  .hero-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+  .stat-box {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 14px 10px; text-align: center;
+  }
+  .stat-val {
+    font-family: 'Orbitron', monospace; font-size: 1.6rem; font-weight: 700;
+    background: linear-gradient(90deg, #a78bfa, #22d3ee);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .stat-lbl { font-size: 0.68rem; color: rgba(200,220,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* ── SECTIONS ────────────────────────────────── */
+  section { padding: 80px 48px; }
+  .sec-inner { max-width: 1100px; margin: 0 auto; }
+  .sec-label {
+    font-family: 'Orbitron', monospace; font-size: 0.7rem;
+    color: #22d3ee; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .sec-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900;
+    background: linear-gradient(90deg, #e8f4ff 40%, #a78bfa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 12px;
+  }
+  .sec-sub { color: rgba(200,220,255,0.55); font-size: 0.95rem; line-height: 1.7; max-width: 480px; margin-bottom: 48px; }
+
+  /* ── ABOUT ───────────────────────────────────── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 48px; }
+  .about-text p { color: rgba(200,220,255,0.65); line-height: 1.75; margin-bottom: 18px; }
+  .skills-label { font-family: 'Orbitron', monospace; font-size: 0.7rem; color: #22d3ee; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 18px; }
+  .skills-wrap { display: flex; flex-wrap: wrap; gap: 12px; }
+  .skill-pill {
+    background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.35);
+    color: #c4b5fd; padding: 8px 20px; border-radius: 50px;
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .skill-pill:hover { background: rgba(124,58,237,0.25); border-color: #a78bfa; color: #e8f4ff; box-shadow: 0 0 16px rgba(124,58,237,0.25); }
+
+  /* ── EXPERIENCE ──────────────────────────────── */
+  .exp-list { display: flex; flex-direction: column; gap: 20px; }
+  .exp-item {
+    padding: 28px 32px;
+    display: grid; grid-template-columns: 56px 1fr auto; gap: 20px; align-items: start;
+    transition: all 0.25s;
+  }
+  .exp-item:hover { border-color: rgba(124,58,237,0.5); transform: translateX(4px); }
+  .exp-icon-box {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3);
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;
+  }
+  .exp-co { font-size: 0.72rem; color: #22d3ee; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+  .exp-role { font-weight: 600; font-size: 1.05rem; margin-bottom: 8px; }
+  .exp-desc { color: rgba(200,220,255,0.6); font-size: 0.88rem; line-height: 1.65; }
+  .exp-badge {
+    background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.25);
+    color: #67e8f9; padding: 5px 14px; border-radius: 50px;
+    font-size: 0.74rem; white-space: nowrap; align-self: start;
+  }
+
+  /* ── PROJECTS ────────────────────────────────── */
+  .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .proj-card { overflow: hidden; transition: all 0.3s; }
+  .proj-card:hover { transform: translateY(-6px); border-color: rgba(124,58,237,0.5); box-shadow: 0 16px 48px rgba(124,58,237,0.15); }
+
+  /* Featured card spans full width */
+  .proj-card.featured { grid-column: span 3; }
+  .proj-card.featured .proj-thumb { height: 240px; }
+
+  /* First non-featured card spans 2 cols */
+  .proj-card.span2 { grid-column: span 2; }
+
+  .proj-thumb {
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem; position: relative;
+  }
+  .proj-thumb.t1 { background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(6,182,212,0.2)); }
+  .proj-thumb.t2 { background: linear-gradient(135deg, rgba(236,72,153,0.25), rgba(124,58,237,0.3)); }
+  .proj-thumb.t3 { background: linear-gradient(135deg, rgba(6,182,212,0.25), rgba(59,130,246,0.3)); }
+  .proj-thumb.t-study { background: linear-gradient(135deg, rgba(15,110,86,0.45), rgba(124,58,237,0.3), rgba(6,182,212,0.2)); font-size: 4rem; }
+  .proj-thumb::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(5,8,24,0.6) 100%);
+  }
+  .proj-body { padding: 22px 24px; }
+  .proj-tags { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .ptag {
+    background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.2);
+    color: #67e8f9; padding: 3px 10px; border-radius: 6px;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+  }
+  .case-tag {
+    background: rgba(168,230,223,0.15); border: 1px solid rgba(168,230,223,0.35);
+    color: #a8e6df; padding: 3px 10px; border-radius: 6px;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+  }
+  .proj-name { font-weight: 600; font-size: 1.05rem; margin-bottom: 6px; }
+  .proj-name-lg { font-weight: 600; font-size: 1.25rem; margin-bottom: 8px; }
+  .proj-desc { color: rgba(200,220,255,0.55); font-size: 0.84rem; line-height: 1.6; }
+
+  /* ── SERVICES ────────────────────────────────── */
+  .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .svc-card { padding: 32px 28px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .svc-card::before {
+    content: ''; position: absolute; inset: 0; border-radius: 20px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.1), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .svc-card:hover::before { opacity: 1; }
+  .svc-card:hover { border-color: rgba(124,58,237,0.45); transform: translateY(-4px); }
+  .svc-ico { font-size: 2rem; margin-bottom: 16px; display: block; }
+  .svc-name { font-weight: 600; font-size: 1rem; margin-bottom: 10px; }
+  .svc-desc { color: rgba(200,220,255,0.55); font-size: 0.84rem; line-height: 1.65; }
+
+  /* ── EDUCATION ───────────────────────────────── */
+  .edu-card {
+    padding: 44px;
+    display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+    max-width: 780px;
+  }
+  .edu-degree { font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+  .edu-school { color: rgba(200,220,255,0.6); margin-bottom: 10px; }
+  .edu-yr { color: #22d3ee; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; }
+  .gpa-box {
+    background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 16px; padding: 24px 28px; text-align: center;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  .gpa-num {
+    font-family: 'Orbitron', monospace; font-size: 2.4rem; font-weight: 900;
+    background: linear-gradient(90deg, #a78bfa, #22d3ee);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1;
+  }
+  .gpa-lbl { font-size: 0.7rem; color: rgba(200,220,255,0.5); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 4px; }
+
+  /* ── CONTACT ─────────────────────────────────── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; margin-top: 48px; }
+  .contact-desc { color: rgba(200,220,255,0.6); line-height: 1.7; margin-bottom: 36px; }
+  .cinfo { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .cinfo-icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3);
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+  }
+  .cinfo-text { color: rgba(200,220,255,0.8); font-size: 0.92rem; }
+  .form-grp { display: flex; flex-direction: column; gap: 14px; }
+  .form-grp input, .form-grp textarea {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 14px 18px;
+    color: #e8f4ff; font-family: 'Inter', sans-serif; font-size: 0.92rem;
+    outline: none; transition: border-color 0.2s; resize: none; width: 100%;
+  }
+  .form-grp input::placeholder, .form-grp textarea::placeholder { color: rgba(200,220,255,0.3); }
+  .form-grp input:focus, .form-grp textarea:focus { border-color: rgba(124,58,237,0.6); }
+  .btn-send { width: 100%; text-align: center; cursor: pointer; }
+
+  /* ── FOOTER ──────────────────────────────────── */
+  footer {
+    border-top: 1px solid rgba(124,58,237,0.2);
+    padding: 28px 48px; text-align: center;
+    background: rgba(255,255,255,0.02);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: rgba(200,220,255,0.4); font-size: 0.82rem;
+  }
+  footer span { color: #a78bfa; }
+
+  /* ── RESPONSIVE ──────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    section { padding: 60px 20px; }
+    .hero { padding: 40px 20px; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; padding: 28px; }
+    .proj-grid { grid-template-columns: 1fr; }
+    .proj-card.featured { grid-column: span 1; }
+    .proj-card.span2 { grid-column: span 1; }
+    .svc-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+    .edu-card { grid-template-columns: 1fr; gap: 24px; }
+    .exp-item { grid-template-columns: auto 1fr; }
+    .exp-badge { grid-column: span 2; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+</div>
+<div class="grid-lines"></div>
+
+<div class="content">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">S·SAFI</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="mailto:safiudeen174@gmail.com" class="nav-btn">Hire Me</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">UIUX Designer</div>
+        <h1 class="hero-name">
+          <span class="g1">Shaik</span><br>
+          <span class="g2">Safiudeen</span>
+        </h1>
+        <div class="hero-title">UI / UX Designer</div>
+        <p class="hero-desc">Crafting futuristic, user-centric digital experiences. 1+ year bridging design and technology to build interfaces that feel alive.</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-glow">View My Work →</a>
+          <a href="#contact" class="btn-outline">Let's Talk</a>
+        </div>
+      </div>
+      <div class="glass hero-card">
+        <div class="avatar-ring">
+          <div class="avatar-inner">🧑‍💻</div>
+        </div>
+        <div class="hero-location">Tamil Nadu, India</div>
+        <div class="hero-stats-grid">
+          <div class="stat-box"><div class="stat-val">5+</div><div class="stat-lbl">Projects</div></div>
+          <div class="stat-box"><div class="stat-val">3</div><div class="stat-lbl">Companies</div></div>
+          <div class="stat-box"><div class="stat-val">1+</div><div class="stat-lbl">Years</div></div>
+          <div class="stat-box"><div class="stat-val">7.85</div><div class="stat-lbl">CGPA</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sec-inner">
+      <div class="glass-purple about-grid">
+        <div class="about-text">
+          <div class="sec-label">About Me</div>
+          <h2 class="sec-title">Design Meets the Future</h2>
+          <p>I'm a UI/UX Designer & Web Developer from Tamil Nadu with a B.Tech in Computer Science & Business Systems. I combine technical depth with design intuition to craft products that are both beautiful and functional.</p>
+          <p>Experienced with AI tools, rapid prototyping, and end-to-end product development. Passionate about pushing the boundaries of what digital interfaces can feel like.</p>
+        </div>
+        <div>
+          <div class="skills-label">Skills &amp; Tools</div>
+          <div class="skills-wrap">
+            <span class="skill-pill">Figma</span>
+            <span class="skill-pill">UI Design</span>
+            <span class="skill-pill">Framer</span>
+            <span class="skill-pill">WixStudio</span>
+            <span class="skill-pill">Prototyping</span>
+            <span class="skill-pill">Usability Testing</span>
+            <span class="skill-pill">Responsive Design</span>
+            <span class="skill-pill">Mobile App UI</span>
+            <span class="skill-pill">Web Layout Design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-inner">
+      <div class="sec-label">Work History</div>
+      <h2 class="sec-title">Experience</h2>
+      <p class="sec-sub">Real-world design across agencies, startups, and freelance clients.</p>
+      <div class="exp-list">
+        <div class="exp-item glass">
+          <div class="exp-icon-box">🏢</div>
+          <div>
+            <div class="exp-co">Zuntra Digital</div>
+            <div class="exp-role">UI/UX Designer</div>
+            <div class="exp-desc">Contributed to 5 real-world projects across UI/UX design and front-end development, collaborating with cross-functional teams to deliver user-centric digital solutions.</div>
+          </div>
+          <div class="exp-badge">2024 – 2025</div>
+        </div>
+        <div class="exp-item glass">
+          <div class="exp-icon-box">🎨</div>
+          <div>
+            <div class="exp-co">Freelancer</div>
+            <div class="exp-role">UI Designer</div>
+            <div class="exp-desc">Designed a responsive website UI for a local food court using Figma, ensuring a seamless experience across mobile and desktop platforms.</div>
+          </div>
+          <div class="exp-badge">2024 – Present</div>
+        </div>
+        <div class="exp-item glass">
+          <div class="exp-icon-box">⚡</div>
+          <div>
+            <div class="exp-co">Coders Boutique</div>
+            <div class="exp-role">Jr Framer Designer</div>
+            <div class="exp-desc">Designed and developed modern landing pages in Framer with responsive, interactive components. Translated UI mockups into high-quality web experiences.</div>
+          </div>
+          <div class="exp-badge">Jan – Apr</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-inner">
+      <div class="sec-label">Selected Work</div>
+      <h2 class="sec-title">Projects</h2>
+      <p class="sec-sub">A showcase of digital products I've designed and built.</p>
+      <div class="proj-grid">
+
+        <!-- FEATURED: StudyCoach AI — full width -->
+        <div class="proj-card featured glass">
+          <div class="proj-thumb t-study">🎓</div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="ptag">Figma</span>
+              <span class="ptag">UI/UX Design</span>
+              <span class="case-tag">Case Study</span>
+            </div>
+            <div class="proj-name-lg">StudyCoach AI</div>
+            <div class="proj-desc">AI-powered learning assistant for Indian college students — bridging the gap between academics and career readiness. Features skill gap detection, a personalised career roadmap, AI resume scoring, mock interviews, and burnout-aware study planning. Full UX case study with user research, personas, usability testing with 5 participants, and hi-fi prototype across 6 screens.</div>
+          </div>
+        </div>
+
+        <!-- Tourism Portal — spans 2 cols -->
+        <div class="proj-card span2 glass">
+          <div class="proj-thumb t1">🌍</div>
+          <div class="proj-body">
+            <div class="proj-tags"><span class="ptag">HTML/CSS</span><span class="ptag">JavaScript</span></div>
+            <div class="proj-name">Tourism Portal</div>
+            <div class="proj-desc">Comprehensive tourism information portal with interactive maps and city guides, helping travelers find the best local experiences.</div>
+          </div>
+        </div>
+
+        <div class="proj-card glass">
+          <div class="proj-thumb t2">📖</div>
+          <div class="proj-body">
+            <div class="proj-tags"><span class="ptag">HTML/CSS</span><span class="ptag">JavaScript</span></div>
+            <div class="proj-name">Dictionary App</div>
+            <div class="proj-desc">A fast, elegant dictionary with definitions, synonyms, and usage examples.</div>
+          </div>
+        </div>
+
+        <div class="proj-card glass">
+          <div class="proj-thumb t3">🎲</div>
+          <div class="proj-body">
+            <div class="proj-tags"><span class="ptag">HTML/CSS</span><span class="ptag">JavaScript</span></div>
+            <div class="proj-name">Random Number Game</div>
+            <div class="proj-desc">Interactive guessing game that teaches algorithms through engaging play.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="sec-inner">
+      <div class="sec-label">What I Offer</div>
+      <h2 class="sec-title">Services</h2>
+      <p class="sec-sub">From concept to pixel-perfect — I handle the full design journey.</p>
+      <div class="svc-grid">
+        <div class="svc-card glass"><span class="svc-ico">🎨</span><div class="svc-name">UI/UX Design</div><div class="svc-desc">Intuitive, visually compelling interfaces with deep focus on user experience, wireframing, and Figma prototyping.</div></div>
+        <div class="svc-card glass"><span class="svc-ico">📱</span><div class="svc-name">Mobile App Design</div><div class="svc-desc">Responsive mobile interfaces delivering seamless experiences across all screen sizes and platforms.</div></div>
+        <div class="svc-card glass"><span class="svc-ico">🌐</span><div class="svc-name">Web Design & Dev</div><div class="svc-desc">Modern websites on Framer and WixStudio with a focus on performance, aesthetics, and usability.</div></div>
+        <div class="svc-card glass"><span class="svc-ico">🔍</span><div class="svc-name">Usability Testing</div><div class="svc-desc">User testing sessions that uncover pain points and drive data-informed design improvements.</div></div>
+        <div class="svc-card glass"><span class="svc-ico">⚡</span><div class="svc-name">Rapid Prototyping</div><div class="svc-desc">Fast interactive prototypes enabling quick feedback loops and reduced development risk.</div></div>
+        <div class="svc-card glass"><span class="svc-ico">🤖</span><div class="svc-name">AI-Powered Design</div><div class="svc-desc">Leveraging AI tools to accelerate workflows and build smarter, innovative digital products.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="sec-inner">
+      <div class="sec-label">Academic Background</div>
+      <h2 class="sec-title">Education</h2>
+      <div class="edu-card glass-cyan">
+        <div>
+          <div class="edu-degree">B.Tech — Computer Science & Business Systems</div>
+          <div class="edu-school">EGS Pillay Engineering College, Nagapattinam</div>
+          <div class="edu-yr">2020 – 2024</div>
+        </div>
+        <div class="gpa-box">
+          <div class="gpa-num">7.85</div>
+          <div class="gpa-lbl">CGPA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="sec-inner">
+      <div class="sec-label">Get In Touch</div>
+      <h2 class="sec-title">Let's Build Something</h2>
+      <div class="contact-grid">
+        <div>
+          <p class="contact-desc">Have a project in mind? Whether it's a full product design or a quick prototype, I'm ready to bring your vision to life.</p>
+          <div class="cinfo"><div class="cinfo-icon">✉️</div><div class="cinfo-text">safiudeen174@gmail.com</div></div>
+          <div class="cinfo"><div class="cinfo-icon">📞</div><div class="cinfo-text">+91 9962088548</div></div>
+          <div class="cinfo"><div class="cinfo-icon">📍</div><div class="cinfo-text">Nagapattinam, Tamil Nadu — 611106</div></div>
+        </div>
+        <div class="form-grp">
+          <input type="text" placeholder="Your Name">
+          <input type="email" placeholder="Email Address">
+          <textarea rows="5" placeholder="Tell me about your project..."></textarea>
+          <button class="btn-glow btn-send">Send Message →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 <span>Shaik Safiudeen</span> · Designed with vision, built with precision.</p>
+  </footer>
+
+</div>
+</body>
+</html>
