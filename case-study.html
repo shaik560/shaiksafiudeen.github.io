@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Studies — Shaik Safiudeen</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #050818; color: #e8f4ff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+  .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.28; }
+  .orb1 { width: 500px; height: 500px; background: #7c3aed; top: -120px; left: -100px; animation: orbFloat 9s ease-in-out infinite; }
+  .orb2 { width: 350px; height: 350px; background: #06b6d4; top: 40%; right: -80px; animation: orbFloat 11s ease-in-out infinite reverse; }
+  .orb3 { width: 300px; height: 300px; background: #ec4899; bottom: 200px; left: 25%; animation: orbFloat 13s ease-in-out infinite 2s; }
+  @keyframes orbFloat { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(20px,-30px) scale(1.05)} 66%{transform:translate(-15px,20px) scale(0.95)} }
+
+  .grid-lines { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.06) 1px, transparent 1px); background-size: 50px 50px; }
+  .content { position: relative; z-index: 1; }
+
+  /* NAV */
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; background: rgba(255,255,255,0.03); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(124,58,237,0.25); position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.1em; background: linear-gradient(90deg, #a78bfa, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+  .nav-back { display: inline-flex; align-items: center; gap: 8px; color: rgba(200,220,255,0.6); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-back:hover { color: #22d3ee; }
+  .nav-back svg { width: 16px; height: 16px; }
+  .nav-btn { background: linear-gradient(135deg, rgba(124,58,237,0.4), rgba(6,182,212,0.3)); border: 1px solid rgba(124,58,237,0.5); color: #e8f4ff; padding: 10px 24px; border-radius: 50px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+  .nav-btn:hover { border-color: #22d3ee; box-shadow: 0 0 20px rgba(34,211,238,0.3); }
+
+  /* PAGE HEADER */
+  .page-header { padding: 80px 48px 60px; max-width: 1100px; margin: 0 auto; }
+  .page-header .sec-label { font-family: 'Orbitron', monospace; font-size: 0.7rem; color: #22d3ee; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 12px; }
+  .page-header h1 { font-family: 'Orbitron', monospace; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; background: linear-gradient(90deg, #e8f4ff 40%, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; }
+  .page-header p { color: rgba(200,220,255,0.55); font-size: 1rem; line-height: 1.7; max-width: 560px; }
+
+  /* PROJECT QUICK NAV */
+  .proj-nav { padding: 0 48px 60px; max-width: 1100px; margin: 0 auto; }
+  .proj-nav-inner { display: flex; gap: 12px; flex-wrap: wrap; }
+  .proj-nav-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 10px 20px; color: rgba(200,220,255,0.65); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em; transition: all 0.25s; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .proj-nav-pill:hover, .proj-nav-pill.active { border-color: rgba(124,58,237,0.5); color: #c4b5fd; background: rgba(124,58,237,0.12); }
+
+  /* CASE STUDY SECTION */
+  .cs-section { padding: 0 48px 100px; max-width: 1100px; margin: 0 auto; scroll-margin-top: 90px; }
+
+  /* Hero banner per project */
+  .cs-banner { border-radius: 24px; padding: 56px 52px; margin-bottom: 48px; position: relative; overflow: hidden; }
+  .cs-banner.b-study { background: linear-gradient(135deg, rgba(15,110,86,0.5), rgba(124,58,237,0.4), rgba(6,182,212,0.25)); border: 1px solid rgba(124,58,237,0.35); }
+  .cs-banner.b-tourism { background: linear-gradient(135deg, rgba(124,58,237,0.35), rgba(6,182,212,0.3)); border: 1px solid rgba(6,182,212,0.3); }
+  .cs-banner.b-mucbe { background: linear-gradient(135deg, rgba(236,72,153,0.3), rgba(124,58,237,0.35)); border: 1px solid rgba(236,72,153,0.3); }
+  .cs-banner.b-game { background: linear-gradient(135deg, rgba(6,182,212,0.3), rgba(59,130,246,0.35)); border: 1px solid rgba(59,130,246,0.3); }
+  .cs-banner::before { content: ''; position: absolute; inset: 0; background: rgba(5,8,24,0.35); }
+  .cs-banner-inner { position: relative; z-index: 1; }
+  .cs-num { font-family: 'Orbitron', monospace; font-size: 0.68rem; color: #22d3ee; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 10px; }
+  .cs-banner h2 { font-family: 'Orbitron', monospace; font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 900; background: linear-gradient(90deg, #ffffff, #c4b5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; }
+  .cs-banner-sub { color: rgba(200,220,255,0.75); font-size: 1rem; line-height: 1.65; max-width: 620px; margin-bottom: 28px; }
+  .cs-banner-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+  .cs-tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(200,220,255,0.8); padding: 5px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; }
+  .cs-banner-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #7c3aed, #06b6d4); color: #fff; padding: 12px 26px; border-radius: 50px; font-size: 0.84rem; font-weight: 600; letter-spacing: 0.05em; text-decoration: none; transition: all 0.25s; border: none; cursor: pointer; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(124,58,237,0.45); }
+  .btn-primary svg { width: 15px; height: 15px; }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: rgba(200,220,255,0.85); padding: 12px 26px; border-radius: 50px; font-size: 0.84rem; font-weight: 600; letter-spacing: 0.05em; text-decoration: none; transition: all 0.25s; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .btn-secondary:hover { border-color: rgba(34,211,238,0.5); color: #22d3ee; background: rgba(34,211,238,0.07); }
+  .btn-secondary svg { width: 15px; height: 15px; }
+
+  /* Details grid */
+  .cs-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+  .cs-meta-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 20px; }
+  .cs-meta-label { font-family: 'Orbitron', monospace; font-size: 0.62rem; color: #22d3ee; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px; }
+  .cs-meta-val { font-size: 0.92rem; color: rgba(200,220,255,0.85); font-weight: 500; line-height: 1.5; }
+
+  /* Content blocks */
+  .cs-body { display: flex; flex-direction: column; gap: 32px; }
+  .cs-block { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 20px; padding: 36px 40px; }
+  .cs-block-title { font-family: 'Orbitron', monospace; font-size: 0.78rem; color: #a78bfa; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px; }
+  .cs-block p { color: rgba(200,220,255,0.65); font-size: 0.92rem; line-height: 1.8; margin-bottom: 12px; }
+  .cs-block p:last-child { margin-bottom: 0; }
+  .cs-block ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .cs-block ul li { color: rgba(200,220,255,0.65); font-size: 0.92rem; line-height: 1.7; padding-left: 20px; position: relative; }
+  .cs-block ul li::before { content: '→'; position: absolute; left: 0; color: #22d3ee; font-size: 0.8rem; }
+
+  .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* Highlight stat chips inside case study */
+  .cs-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+  .cs-stat { background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.3); border-radius: 14px; padding: 18px 24px; text-align: center; flex: 1; min-width: 120px; }
+  .cs-stat-val { font-family: 'Orbitron', monospace; font-size: 1.5rem; font-weight: 700; background: linear-gradient(90deg, #a78bfa, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .cs-stat-lbl { font-size: 0.7rem; color: rgba(200,220,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+  /* Divider between case studies */
+  .cs-divider { border: none; border-top: 1px solid rgba(124,58,237,0.18); margin: 20px 48px 80px; max-width: 1100px; }
+
+  /* Footer */
+  footer { border-top: 1px solid rgba(124,58,237,0.2); padding: 28px 48px; text-align: center; background: rgba(255,255,255,0.02); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: rgba(200,220,255,0.4); font-size: 0.82rem; }
+  footer span { color: #a78bfa; }
+  footer a { color: #22d3ee; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .page-header, .proj-nav, .cs-section { padding-left: 20px; padding-right: 20px; }
+    .cs-banner { padding: 36px 28px; }
+    .cs-meta { grid-template-columns: 1fr 1fr; }
+    .cs-block { padding: 24px 22px; }
+    .cs-two-col { grid-template-columns: 1fr; }
+    .cs-divider { margin: 20px 20px 60px; }
+    footer { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-orbs">
+  <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+</div>
+<div class="grid-lines"></div>
+<div class="content">
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">S·SAFI</a>
+    <a href="index.html#projects" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to Portfolio
+    </a>
+    <a href="mailto:safiudeen174@gmail.com" class="nav-btn">Hire Me</a>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="sec-label">Portfolio Deep Dive</div>
+    <h1>Case Studies</h1>
+    <p>A detailed look at my design process, decisions, and outcomes across each project — from research to final delivery.</p>
+  </div>
+
+  <!-- QUICK NAV -->
+  <div class="proj-nav">
+    <div class="proj-nav-inner">
+      <a href="#studycoach" class="proj-nav-pill">🎓 StudyCoach AI</a>
+      <a href="#tourism" class="proj-nav-pill">🌍 Tourism Portal</a>
+      <a href="#mucbe" class="proj-nav-pill">📚 MuCbe</a>
+      <a href="#randomgame" class="proj-nav-pill">🎲 Random Number Game</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CASE STUDY 1 — StudyCoach AI           -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="cs-section" id="studycoach">
+    <div class="cs-banner b-study">
+      <div class="cs-banner-inner">
+        <div class="cs-num">Case Study 01 · Figma · UI/UX Design</div>
+        <h2>StudyCoach AI</h2>
+        <p class="cs-banner-sub">An AI-powered learning assistant designed for Indian college students — bridging the gap between academics and career readiness with smart, personalized guidance.</p>
+        <div class="cs-banner-tags">
+          <span class="cs-tag">Figma</span>
+          <span class="cs-tag">UI/UX Design</span>
+          <span class="cs-tag">User Research</span>
+          <span class="cs-tag">Prototyping</span>
+          <span class="cs-tag">Usability Testing</span>
+        </div>
+        <div class="cs-banner-btns">
+          <a href="https://www.figma.com/proto/eHzoE8BWF5FINNU39u6YGp/second-process?node-id=2780-72&t=3VG4fMdaKlSgrf1f-1&scaling=min-zoom&content-scaling=fixed&page-id=2227%3A3&starting-point-node-id=2780%3A72" target="_blank" class="btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            View Live Prototype
+          </a>
+          <a href="index.html#projects" class="btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Back to Projects
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-meta">
+      <div class="cs-meta-box"><div class="cs-meta-label">Role</div><div class="cs-meta-val">UI/UX Designer</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">Figma, FigJam</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Duration</div><div class="cs-meta-val">8 Weeks</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Type</div><div class="cs-meta-val">End-to-End UX Case Study</div></div>
+    </div>
+
+    <div class="cs-body">
+      <div class="cs-block">
+        <div class="cs-block-title">The Problem</div>
+        <p>Indian college students face a major disconnect between academic learning and real-world career preparation. Existing tools are either too generic or too complex, leaving students overwhelmed and underprepared at the time they need it most.</p>
+        <p>StudyCoach AI was designed to solve this — an intelligent companion that understands where a student is and guides them to where they need to be, all within a single, intuitive interface.</p>
+      </div>
+
+      <div class="cs-two-col">
+        <div class="cs-block">
+          <div class="cs-block-title">Research & Discovery</div>
+          <ul>
+            <li>Interviewed 12 college students across 3 disciplines</li>
+            <li>Identified top pain point: no personalized career guidance</li>
+            <li>Created 3 user personas based on behavioral patterns</li>
+            <li>Ran competitor analysis on 5 existing edtech platforms</li>
+            <li>Mapped user journeys to surface key friction points</li>
+          </ul>
+        </div>
+        <div class="cs-block">
+          <div class="cs-block-title">Key Features Designed</div>
+          <ul>
+            <li>Skill gap detection with visual progress mapping</li>
+            <li>Personalised career roadmap generator</li>
+            <li>AI resume scoring with actionable feedback</li>
+            <li>Mock interview simulator with prompts</li>
+            <li>Burnout-aware adaptive study planner</li>
+            <li>6-screen hi-fi prototype in Figma</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cs-block">
+        <div class="cs-block-title">Design Process</div>
+        <p>I followed a double-diamond design process — starting broad with divergent research, then converging on core user needs. Lo-fi wireframes were sketched to validate layout before moving to hi-fi in Figma.</p>
+        <p>The visual language was kept clean and motivational — using a deep navy base with vibrant accent colours to inspire confidence without overwhelming students already dealing with academic stress.</p>
+        <div class="cs-stats">
+          <div class="cs-stat"><div class="cs-stat-val">5</div><div class="cs-stat-lbl">Usability Tests</div></div>
+          <div class="cs-stat"><div class="cs-stat-val">6</div><div class="cs-stat-lbl">Hi-Fi Screens</div></div>
+          <div class="cs-stat"><div class="cs-stat-val">3</div><div class="cs-stat-lbl">User Personas</div></div>
+          <div class="cs-stat"><div class="cs-stat-val">2</div><div class="cs-stat-lbl">Iterations</div></div>
+        </div>
+      </div>
+
+      <div class="cs-block">
+        <div class="cs-block-title">Outcome & Learnings</div>
+        <p>All 5 usability test participants successfully completed core tasks with zero critical errors. Feedback highlighted the roadmap feature as the most valuable — students felt "seen" by the personalized guidance.</p>
+        <p>Key learning: designing for anxiety-prone users requires as much emotional design consideration as functional — clarity, encouragement, and visible progress are not just UX niceties, they are core to adoption.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="cs-divider">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CASE STUDY 2 — Tourism Portal           -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="cs-section" id="tourism">
+    <div class="cs-banner b-tourism">
+      <div class="cs-banner-inner">
+        <div class="cs-num">Case Study 02 · HTML/CSS · JavaScript</div>
+        <h2>Tourism Portal</h2>
+        <p class="cs-banner-sub">A comprehensive tourism information portal with interactive city guides, helping travelers discover and plan the best local experiences with ease.</p>
+        <div class="cs-banner-tags">
+          <span class="cs-tag">HTML/CSS</span>
+          <span class="cs-tag">JavaScript</span>
+          <span class="cs-tag">Responsive Design</span>
+          <span class="cs-tag">Web Development</span>
+        </div>
+        <div class="cs-banner-btns">
+          <a href="https://github.com/shaik560/Project-intern-" target="_blank" class="btn-primary">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+          <a href="index.html#projects" class="btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Back to Projects
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-meta">
+      <div class="cs-meta-box"><div class="cs-meta-label">Role</div><div class="cs-meta-val">Frontend Developer & Designer</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">HTML, CSS, JavaScript</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Context</div><div class="cs-meta-val">Internship Project</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Type</div><div class="cs-meta-val">Web Development</div></div>
+    </div>
+
+    <div class="cs-body">
+      <div class="cs-block">
+        <div class="cs-block-title">Project Overview</div>
+        <p>Built during my internship, the Tourism Portal was designed to help travelers discover local destinations, attractions, and experiences through a clean and interactive web interface.</p>
+        <p>The goal was to create something that felt welcoming and easy to explore — a digital gateway to discovering places, not just a list of facts.</p>
+      </div>
+
+      <div class="cs-two-col">
+        <div class="cs-block">
+          <div class="cs-block-title">What Was Built</div>
+          <ul>
+            <li>Multi-page tourism information site</li>
+            <li>Interactive city & destination guides</li>
+            <li>Integrated map-style navigation sections</li>
+            <li>Fully responsive layout — mobile to desktop</li>
+            <li>Smooth scroll and section animations</li>
+          </ul>
+        </div>
+        <div class="cs-block">
+          <div class="cs-block-title">Technical Highlights</div>
+          <ul>
+            <li>Pure HTML/CSS/JS — no frameworks</li>
+            <li>CSS Grid & Flexbox for adaptive layouts</li>
+            <li>JavaScript DOM manipulation for interactivity</li>
+            <li>Optimized assets for fast page load</li>
+            <li>Cross-browser compatible styling</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cs-block">
+        <div class="cs-block-title">Outcome & Learnings</div>
+        <p>The project strengthened my understanding of building real, production-ready web pages from scratch without relying on libraries. It reinforced how good layout structure and thoughtful UI decisions make even a simple portal feel polished and trustworthy.</p>
+        <p>I gained confidence in responsive design patterns and how visual hierarchy guides users through content-heavy pages without overwhelming them.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="cs-divider">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CASE STUDY 3 — MuCbe                   -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="cs-section" id="mucbe">
+    <div class="cs-banner b-mucbe">
+      <div class="cs-banner-inner">
+        <div class="cs-num">Case Study 03 · WixStudio · Web Design</div>
+        <h2>MuCbe — Library Platform</h2>
+        <p class="cs-banner-sub">A fully designed library management web platform built on WixStudio — created for Zuntra Digital to deliver seamless book discovery, cataloguing, and an intuitive digital library experience.</p>
+        <div class="cs-banner-tags">
+          <span class="cs-tag">WixStudio</span>
+          <span class="cs-tag">Web Design</span>
+          <span class="cs-tag">UI Design</span>
+          <span class="cs-tag">Zuntra Digital</span>
+        </div>
+        <div class="cs-banner-btns">
+          <a href="https://zuntra.wixstudio.com/cube" target="_blank" class="btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Visit Live Site
+          </a>
+          <a href="index.html#projects" class="btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Back to Projects
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-meta">
+      <div class="cs-meta-box"><div class="cs-meta-label">Role</div><div class="cs-meta-val">UI Designer & WixStudio Developer</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">WixStudio, Figma</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Client</div><div class="cs-meta-val">Zuntra Digital</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Type</div><div class="cs-meta-val">Client Web Project</div></div>
+    </div>
+
+    <div class="cs-body">
+      <div class="cs-block">
+        <div class="cs-block-title">Project Overview</div>
+        <p>MuCbe is a library web platform I designed and built as part of my role at Zuntra Digital. The client needed a modern, easy-to-navigate digital presence for their library service — one that felt welcoming to users of all ages and technical comfort levels.</p>
+        <p>The challenge was to balance visual appeal with functional clarity — making it easy for visitors to browse, search, and engage with the library's catalogue without friction.</p>
+      </div>
+
+      <div class="cs-two-col">
+        <div class="cs-block">
+          <div class="cs-block-title">Design Decisions</div>
+          <ul>
+            <li>Clean, accessible layout for diverse age groups</li>
+            <li>Warm colour palette to evoke trust and comfort</li>
+            <li>Clear content hierarchy for fast scanning</li>
+            <li>Mobile-first responsive design approach</li>
+            <li>Intuitive navigation and CTA placement</li>
+          </ul>
+        </div>
+        <div class="cs-block">
+          <div class="cs-block-title">Built With WixStudio</div>
+          <ul>
+            <li>Custom responsive layout using WixStudio grid</li>
+            <li>Dynamic content sections for catalogue display</li>
+            <li>Optimised page performance and load times</li>
+            <li>Integrated client branding and typography</li>
+            <li>Delivered production-ready to the client</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cs-block">
+        <div class="cs-block-title">Outcome</div>
+        <p>The site was delivered on time and received positive feedback from the client for its clarity and visual consistency. It demonstrated my ability to take a brief from concept through to a live, client-ready web product using WixStudio as the delivery platform.</p>
+        <p>Working within WixStudio's constraints while maintaining design quality was a valuable experience that sharpened my ability to adapt and problem-solve within platform limitations.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="cs-divider">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CASE STUDY 4 — Random Number Game      -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="cs-section" id="randomgame">
+    <div class="cs-banner b-game">
+      <div class="cs-banner-inner">
+        <div class="cs-num">Case Study 04 · HTML/CSS · JavaScript</div>
+        <h2>Random Number Game</h2>
+        <p class="cs-banner-sub">An interactive browser-based guessing game that makes learning number logic and algorithm thinking fun — built with pure HTML, CSS, and JavaScript.</p>
+        <div class="cs-banner-tags">
+          <span class="cs-tag">HTML/CSS</span>
+          <span class="cs-tag">JavaScript</span>
+          <span class="cs-tag">Game Design</span>
+          <span class="cs-tag">Interactive UI</span>
+        </div>
+        <div class="cs-banner-btns">
+          <a href="https://github.com/shaik560/Guess-the-Random-no" target="_blank" class="btn-primary">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+          <a href="index.html#projects" class="btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Back to Projects
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-meta">
+      <div class="cs-meta-box"><div class="cs-meta-label">Role</div><div class="cs-meta-val">Developer & Designer</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">HTML, CSS, JavaScript</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Type</div><div class="cs-meta-val">Personal / Learning Project</div></div>
+      <div class="cs-meta-box"><div class="cs-meta-label">Focus</div><div class="cs-meta-val">Interactive UI & Logic</div></div>
+    </div>
+
+    <div class="cs-body">
+      <div class="cs-block">
+        <div class="cs-block-title">Project Overview</div>
+        <p>The Random Number Guessing Game is a browser-based interactive project built to sharpen JavaScript logic skills while creating something genuinely fun and engaging to play.</p>
+        <p>The game generates a random number and challenges the player to guess it within a set number of attempts — providing hot/cold feedback to guide the player toward the answer.</p>
+      </div>
+
+      <div class="cs-two-col">
+        <div class="cs-block">
+          <div class="cs-block-title">Features</div>
+          <ul>
+            <li>Random number generation on each play</li>
+            <li>Attempt counter with win/lose logic</li>
+            <li>Higher / Lower feedback on each guess</li>
+            <li>Score tracking across rounds</li>
+            <li>Clean, minimal UI with instant feedback states</li>
+          </ul>
+        </div>
+        <div class="cs-block">
+          <div class="cs-block-title">Technical Skills Applied</div>
+          <ul>
+            <li>Vanilla JavaScript — no libraries used</li>
+            <li>DOM manipulation and event listeners</li>
+            <li>Conditional logic and game state management</li>
+            <li>CSS transitions for responsive feedback UI</li>
+            <li>Input validation and error handling</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cs-block">
+        <div class="cs-block-title">Outcome & Learnings</div>
+        <p>This project was a solid exercise in translating logic into interactive UI — making sure the game felt responsive and satisfying on every guess, win, or loss. It reinforced the value of instant, clear visual feedback in game design.</p>
+        <p>A simple concept executed well teaches more than a complex one executed poorly — and this project reminded me that constraints drive creativity.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <span>Shaik Safiudeen</span> · <a href="index.html">Back to Portfolio</a> · Designed with vision, built with precision.</p>
+  </footer>
+
+</div>
+</body>
+</html>
