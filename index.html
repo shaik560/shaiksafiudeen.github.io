@@ -27,7 +27,6 @@
   }
   .content { position: relative; z-index: 1; }
 
-  /* NAV */
   nav {
     display: flex; justify-content: space-between; align-items: center;
     padding: 20px 48px;
@@ -36,36 +35,20 @@
     border-bottom: 1px solid rgba(124,58,237,0.25);
     position: sticky; top: 0; z-index: 100;
   }
-  .nav-logo {
-    font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.1em;
-    background: linear-gradient(90deg, #a78bfa, #22d3ee);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
+  .nav-logo { font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.1em; background: linear-gradient(90deg, #a78bfa, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .nav-links { display: flex; gap: 32px; list-style: none; }
   .nav-links a { color: rgba(200,220,255,0.6); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover { color: #22d3ee; }
-  .nav-btn {
-    background: linear-gradient(135deg, rgba(124,58,237,0.4), rgba(6,182,212,0.3));
-    border: 1px solid rgba(124,58,237,0.5); color: #e8f4ff; padding: 10px 24px; border-radius: 50px;
-    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-    cursor: pointer; transition: all 0.2s; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); text-decoration: none;
-  }
+  .nav-btn { background: linear-gradient(135deg, rgba(124,58,237,0.4), rgba(6,182,212,0.3)); border: 1px solid rgba(124,58,237,0.5); color: #e8f4ff; padding: 10px 24px; border-radius: 50px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); text-decoration: none; }
   .nav-btn:hover { border-color: #22d3ee; box-shadow: 0 0 20px rgba(34,211,238,0.3); }
 
-  /* GLASS */
   .glass { background: rgba(255,255,255,0.04); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; }
   .glass-purple { background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3); border-radius: 20px; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
   .glass-cyan { background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.3); border-radius: 20px; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
 
-  /* HERO */
   .hero { min-height: calc(100vh - 66px); display: flex; align-items: center; padding: 60px 48px; }
   .hero-inner { max-width: 1100px; width: 100%; margin: 0 auto; display: grid; grid-template-columns: 1fr 320px; gap: 60px; align-items: center; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.3);
-    color: #22d3ee; padding: 6px 16px; border-radius: 50px;
-    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 24px;
-  }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.3); color: #22d3ee; padding: 6px 16px; border-radius: 50px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 24px; }
   .hero-badge::before { content: ''; width: 7px; height: 7px; background: #22d3ee; border-radius: 50%; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
   .hero-name { font-family: 'Orbitron', monospace; font-size: clamp(2.8rem, 5vw, 4.8rem); font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin-bottom: 8px; }
@@ -87,14 +70,12 @@
   .stat-val { font-family: 'Orbitron', monospace; font-size: 1.6rem; font-weight: 700; background: linear-gradient(90deg, #a78bfa, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .stat-lbl { font-size: 0.68rem; color: rgba(200,220,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
 
-  /* SECTIONS */
   section { padding: 80px 48px; }
   .sec-inner { max-width: 1100px; margin: 0 auto; }
   .sec-label { font-family: 'Orbitron', monospace; font-size: 0.7rem; color: #22d3ee; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 10px; }
   .sec-title { font-family: 'Orbitron', monospace; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; background: linear-gradient(90deg, #e8f4ff 40%, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; }
   .sec-sub { color: rgba(200,220,255,0.55); font-size: 0.95rem; line-height: 1.7; max-width: 480px; margin-bottom: 48px; }
 
-  /* ABOUT */
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 48px; }
   .about-text p { color: rgba(200,220,255,0.65); line-height: 1.75; margin-bottom: 18px; }
   .skills-label { font-family: 'Orbitron', monospace; font-size: 0.7rem; color: #22d3ee; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 18px; }
@@ -102,7 +83,6 @@
   .skill-pill { background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.35); color: #c4b5fd; padding: 8px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em; transition: all 0.2s; }
   .skill-pill:hover { background: rgba(124,58,237,0.25); border-color: #a78bfa; color: #e8f4ff; box-shadow: 0 0 16px rgba(124,58,237,0.25); }
 
-  /* EXPERIENCE */
   .exp-list { display: flex; flex-direction: column; gap: 20px; }
   .exp-item { padding: 28px 32px; display: grid; grid-template-columns: 56px 1fr auto; gap: 20px; align-items: start; transition: all 0.25s; }
   .exp-item:hover { border-color: rgba(124,58,237,0.5); transform: translateX(4px); }
@@ -112,7 +92,6 @@
   .exp-desc { color: rgba(200,220,255,0.6); font-size: 0.88rem; line-height: 1.65; }
   .exp-badge { background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.25); color: #67e8f9; padding: 5px 14px; border-radius: 50px; font-size: 0.74rem; white-space: nowrap; align-self: start; }
 
-  /* PROJECTS */
   .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .proj-card { overflow: hidden; transition: all 0.3s; display: flex; flex-direction: column; }
   .proj-card:hover { transform: translateY(-6px); border-color: rgba(124,58,237,0.5); box-shadow: 0 16px 48px rgba(124,58,237,0.15); }
@@ -124,6 +103,7 @@
   .proj-thumb.t2 { background: linear-gradient(135deg, rgba(236,72,153,0.25), rgba(124,58,237,0.3)); }
   .proj-thumb.t3 { background: linear-gradient(135deg, rgba(6,182,212,0.25), rgba(59,130,246,0.3)); }
   .proj-thumb.t-study { background: linear-gradient(135deg, rgba(15,110,86,0.45), rgba(124,58,237,0.3), rgba(6,182,212,0.2)); font-size: 4rem; }
+  .proj-thumb.t-food { background: linear-gradient(135deg, rgba(251,146,60,0.35), rgba(239,68,68,0.3), rgba(234,179,8,0.2)); }
   .proj-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(5,8,24,0.6) 100%); }
   .proj-body { padding: 22px 24px; flex: 1; display: flex; flex-direction: column; }
   .proj-tags { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
@@ -133,28 +113,13 @@
   .proj-name-lg { font-weight: 600; font-size: 1.25rem; margin-bottom: 8px; }
   .proj-desc { color: rgba(200,220,255,0.55); font-size: 0.84rem; line-height: 1.6; flex: 1; }
   .proj-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
-  .btn-case {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(6,182,212,0.2));
-    border: 1px solid rgba(124,58,237,0.45); color: #c4b5fd;
-    padding: 9px 18px; border-radius: 50px;
-    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
-    text-decoration: none; transition: all 0.25s; cursor: pointer;
-    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  }
+  .btn-case { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(6,182,212,0.2)); border: 1px solid rgba(124,58,237,0.45); color: #c4b5fd; padding: 9px 18px; border-radius: 50px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: all 0.25s; cursor: pointer; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
   .btn-case:hover { border-color: #a78bfa; color: #e8f4ff; box-shadow: 0 0 20px rgba(124,58,237,0.3); transform: translateY(-1px); }
   .btn-case svg { width: 13px; height: 13px; flex-shrink: 0; }
-  .btn-live {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: transparent; border: 1px solid rgba(34,211,238,0.3); color: #67e8f9;
-    padding: 9px 18px; border-radius: 50px;
-    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
-    text-decoration: none; transition: all 0.25s;
-  }
+  .btn-live { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 1px solid rgba(34,211,238,0.3); color: #67e8f9; padding: 9px 18px; border-radius: 50px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-decoration: none; transition: all 0.25s; }
   .btn-live:hover { border-color: #22d3ee; background: rgba(34,211,238,0.07); box-shadow: 0 0 16px rgba(34,211,238,0.2); transform: translateY(-1px); }
   .btn-live svg { width: 13px; height: 13px; flex-shrink: 0; }
 
-  /* SKILLS / SERVICES */
   .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .svc-card { padding: 32px 28px; transition: all 0.3s; position: relative; overflow: hidden; }
   .svc-card::before { content: ''; position: absolute; inset: 0; border-radius: 20px; background: linear-gradient(135deg, rgba(124,58,237,0.1), transparent); opacity: 0; transition: opacity 0.3s; }
@@ -164,7 +129,6 @@
   .svc-name { font-weight: 600; font-size: 1rem; margin-bottom: 10px; }
   .svc-desc { color: rgba(200,220,255,0.55); font-size: 0.84rem; line-height: 1.65; }
 
-  /* EDUCATION */
   .edu-card { padding: 44px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; max-width: 780px; }
   .edu-degree { font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
   .edu-school { color: rgba(200,220,255,0.6); margin-bottom: 10px; }
@@ -173,7 +137,6 @@
   .gpa-num { font-family: 'Orbitron', monospace; font-size: 2.4rem; font-weight: 900; background: linear-gradient(90deg, #a78bfa, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
   .gpa-lbl { font-size: 0.7rem; color: rgba(200,220,255,0.5); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 4px; }
 
-  /* CONTACT */
   .contact-info-only { margin-top: 48px; }
   .contact-desc { color: rgba(200,220,255,0.6); line-height: 1.7; margin-bottom: 36px; max-width: 560px; }
   .cinfo-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 36px; }
@@ -187,11 +150,9 @@
   .social-btn.linkedin:hover { border-color: rgba(10,102,194,0.7); color: #60a5fa; background: rgba(10,102,194,0.12); box-shadow: 0 0 16px rgba(10,102,194,0.2); }
   .social-btn.mail:hover     { border-color: rgba(124,58,237,0.6); color: #a78bfa; background: rgba(124,58,237,0.12); box-shadow: 0 0 16px rgba(124,58,237,0.2); }
 
-  /* FOOTER */
   footer { border-top: 1px solid rgba(124,58,237,0.2); padding: 28px 48px; text-align: center; background: rgba(255,255,255,0.02); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: rgba(200,220,255,0.4); font-size: 0.82rem; }
   footer span { color: #a78bfa; }
 
-  /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
     .nav-links { display: none; }
@@ -216,7 +177,6 @@
 <div class="grid-lines"></div>
 <div class="content">
 
-  <!-- NAV -->
   <nav>
     <div class="nav-logo">S·SAFI</div>
     <ul class="nav-links">
@@ -229,7 +189,6 @@
     <a href="mailto:safiudeen174@gmail.com" class="nav-btn">Hire Me</a>
   </nav>
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-inner">
       <div>
@@ -246,7 +205,7 @@
         <div class="avatar-ring"><div class="avatar-inner">🧑‍💻</div></div>
         <div class="hero-location">Tamil Nadu, India</div>
         <div class="hero-stats-grid">
-          <div class="stat-box"><div class="stat-val">5+</div><div class="stat-lbl">Projects</div></div>
+          <div class="stat-box"><div class="stat-val">6+</div><div class="stat-lbl">Projects</div></div>
           <div class="stat-box"><div class="stat-val">3</div><div class="stat-lbl">Companies</div></div>
           <div class="stat-box"><div class="stat-val">1+</div><div class="stat-lbl">Years</div></div>
           <div class="stat-box"><div class="stat-val">7.85</div><div class="stat-lbl">CGPA</div></div>
@@ -255,7 +214,6 @@
     </div>
   </div>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="sec-inner">
       <div class="glass-purple about-grid">
@@ -279,15 +237,12 @@
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
   <section id="experience">
     <div class="sec-inner">
       <div class="sec-label">Work History</div>
       <h2 class="sec-title">Experience</h2>
       <p class="sec-sub">Real-world design across agencies, startups, and freelance clients.</p>
       <div class="exp-list">
-
-        <!-- 1. Freelancer — ongoing (first) -->
         <div class="exp-item glass">
           <div class="exp-icon-box">🎨</div>
           <div>
@@ -297,8 +252,6 @@
           </div>
           <div class="exp-badge">2024 – Present</div>
         </div>
-
-        <!-- 2. Coders Boutique — most recent completed -->
         <div class="exp-item glass">
           <div class="exp-icon-box">⚡</div>
           <div>
@@ -308,8 +261,6 @@
           </div>
           <div class="exp-badge">Jan – Apr 2025</div>
         </div>
-
-        <!-- 3. Zuntra Digital — earlier -->
         <div class="exp-item glass">
           <div class="exp-icon-box">🏢</div>
           <div>
@@ -319,12 +270,10 @@
           </div>
           <div class="exp-badge">2024 – 2025</div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="sec-inner">
       <div class="sec-label">Selected Work</div>
@@ -332,6 +281,7 @@
       <p class="sec-sub">A showcase of digital products I've designed and built.</p>
       <div class="proj-grid">
 
+        <!-- StudyCoach AI — featured -->
         <div class="proj-card featured glass">
           <div class="proj-thumb t-study">🎓</div>
           <div class="proj-body">
@@ -353,7 +303,28 @@
           </div>
         </div>
 
+        <!-- The Spot — span2 -->
         <div class="proj-card span2 glass">
+          <div class="proj-thumb t-food">🍽️</div>
+          <div class="proj-body">
+            <div class="proj-tags"><span class="ptag">Figma</span><span class="ptag">UI Design</span><span class="ptag">Menu Design</span></div>
+            <div class="proj-name">The Spot — Food Court</div>
+            <div class="proj-desc">A visually crafted digital menu card UI for "The Spot" food court — designed in Figma with a warm, appetizing aesthetic. Focused on clear food categorisation, easy item browsing, and a layout that feels inviting both on screen and in print.</div>
+            <div class="proj-actions">
+              <a href="case-study.html#thespot" class="btn-case">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                View Case Study
+              </a>
+              <a href="https://www.figma.com/design/fvK7LxaJjSzRqW5Ge1KsDw/project--Copy-?node-id=23-2&p=f&t=x8yMLxaW8ZMzNOeC-0" target="_blank" class="btn-live">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                View in Figma
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tourism Portal -->
+        <div class="proj-card glass">
           <div class="proj-thumb t1">🌍</div>
           <div class="proj-body">
             <div class="proj-tags"><span class="ptag">HTML/CSS</span><span class="ptag">JavaScript</span></div>
@@ -372,6 +343,7 @@
           </div>
         </div>
 
+        <!-- MuCbe -->
         <div class="proj-card glass">
           <div class="proj-thumb t2">📚</div>
           <div class="proj-body">
@@ -391,6 +363,7 @@
           </div>
         </div>
 
+        <!-- Random Number Game -->
         <div class="proj-card glass">
           <div class="proj-thumb t3">🎲</div>
           <div class="proj-body">
@@ -414,7 +387,6 @@
     </div>
   </section>
 
-  <!-- SKILLS (renamed from Services) -->
   <section id="skills">
     <div class="sec-inner">
       <div class="sec-label">What I Do Best</div>
@@ -431,7 +403,6 @@
     </div>
   </section>
 
-  <!-- EDUCATION -->
   <section id="education">
     <div class="sec-inner">
       <div class="sec-label">Academic Background</div>
@@ -450,7 +421,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="sec-inner">
       <div class="sec-label">Get In Touch</div>
@@ -458,18 +428,9 @@
       <div class="contact-info-only">
         <p class="contact-desc">Open to full-time UI/UX roles. Whether it's a design challenge or a team you're building — I'd love to connect.</p>
         <div class="cinfo-row">
-          <div class="cinfo">
-            <div class="cinfo-icon">✉️</div>
-            <div class="cinfo-text">safiudeen174@gmail.com</div>
-          </div>
-          <div class="cinfo">
-            <div class="cinfo-icon">📞</div>
-            <div class="cinfo-text">+91 9962088548</div>
-          </div>
-          <div class="cinfo">
-            <div class="cinfo-icon">📍</div>
-            <div class="cinfo-text">Nagapattinam, Tamil Nadu — 611106</div>
-          </div>
+          <div class="cinfo"><div class="cinfo-icon">✉️</div><div class="cinfo-text">safiudeen174@gmail.com</div></div>
+          <div class="cinfo"><div class="cinfo-icon">📞</div><div class="cinfo-text">+91 9962088548</div></div>
+          <div class="cinfo"><div class="cinfo-icon">📍</div><div class="cinfo-text">Nagapattinam, Tamil Nadu — 611106</div></div>
         </div>
         <div class="social-links">
           <a href="https://github.com/shaik560" target="_blank" class="social-btn github">
