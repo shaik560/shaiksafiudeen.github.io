@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shaik Safiudeen — UI/UX Designer</title>
+<style>
+:root{
+  --bg-deep: #14101f;
+  --bg-mid: #1f1836;
+  --bg-card: rgba(43,30,74,0.85);
+  --accent-leaf: #A259FF;
+  --accent-amber: #1ABCFE;
+  --accent-cream: #F4F0FF;
+  --accent-extra: #0ACF83;
+  --text-soft: #d9d3f0;
+  --text-dim: #9c8fc4;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior: smooth; }
+
+body{
+  background: var(--bg-deep);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--text-soft);
+  position: relative;
+}
+
+#bg-canvas{
+  position: fixed; top:0; left:0;
+  width: 100vw; height: 100vh;
+  z-index: 0; pointer-events: none;
+}
+
+nav{
+  position:fixed; top:0; left:0; right:0;
+  display:flex; justify-content:center; gap: 28px;
+  padding: 18px; background: transparent;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(2px); z-index: 100; font-size: 0.9rem;
+}
+nav a{ color: var(--text-soft); text-decoration:none; letter-spacing: 1px; transition: color 0.25s ease; cursor:pointer; }
+nav a:hover{ color: var(--accent-leaf); }
+nav a.active{ color: var(--accent-leaf); font-weight: 600; }
+
+/* ---------- Single-file page routing ---------- */
+.page{ display:none; }
+.page.active{ display:block; }
+
+section{ min-height: 100vh; padding: 100px 8vw 60px; position: relative; z-index: 1; }
+
+.section-label{ text-transform: uppercase; letter-spacing: 3px; color: var(--accent-amber); font-size: 0.85rem; margin-bottom: 8px; }
+h2{ font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--accent-cream); margin-bottom: 40px; }
+
+.reveal{ opacity:0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible{ opacity:1; transform: translateY(0); }
+
+#hero{ height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.greeting{ font-size:1rem; letter-spacing:3px; text-transform:uppercase; color:var(--accent-amber); margin-bottom:12px; }
+.hero-name{ font-size: clamp(2.5rem, 7vw, 5rem); font-weight:700; color:var(--accent-cream); }
+.role-line{ margin-top:18px; font-size: clamp(1.1rem, 2.5vw, 1.5rem); min-height:2em; }
+.role-line span{ color: var(--accent-leaf); font-weight:600; transition: opacity 0.3s ease; }
+.cta-row{ margin-top:36px; display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+.btn{ padding:12px 28px; border-radius:999px; border:none; font-size:0.95rem; font-weight:600; cursor:pointer; transition: transform 0.25s ease, box-shadow 0.25s ease; font-family: inherit; }
+.btn.primary{ background: var(--accent-leaf); color:#14101f; }
+.btn.secondary{ background:transparent; color:var(--accent-cream); border:1px solid var(--accent-cream); }
+.btn:hover{ transform: translateY(-3px); box-shadow: 0 8px 20px rgba(162,89,255,0.35); }
+.scroll-cue{ position:absolute; bottom:30px; font-size:0.85rem; color:var(--text-dim); animation: bounce 2s ease-in-out infinite; }
+@keyframes bounce{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+
+.stats-row{ display:flex; gap: 40px; margin-top: 50px; flex-wrap: wrap; justify-content:center; }
+.stat{ text-align:center; }
+.stat .num{ font-size: 1.8rem; font-weight:700; color: var(--accent-leaf); }
+.stat .lbl{ font-size: 0.8rem; color: var(--text-dim); }
+
+.about-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items:start; }
+.about-grid p{ line-height: 1.7; color: var(--text-soft); margin-bottom: 16px; }
+.info-list div{ display:flex; justify-content:space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.9rem; gap: 20px;}
+.info-list span:first-child{ color: var(--text-dim); white-space:nowrap; }
+.info-list span:last-child{ text-align:right; }
+
+.skills-grid{ display:flex; flex-wrap:wrap; gap: 14px; }
+.skill-chip{
+  padding: 10px 18px; border-radius: 999px; background: var(--bg-card);
+  border: 1px solid rgba(162,89,255,0.25); font-size: 0.9rem; cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.skill-chip:hover{ transform: translateY(-4px) scale(1.05); background: var(--accent-leaf); color: #14101f; border-color: var(--accent-leaf); }
+
+.skill-group{ margin-bottom: 34px; }
+.skill-group h4{ color: var(--accent-cream); font-size: 0.95rem; margin-bottom: 14px; font-weight:600; letter-spacing:0.5px; }
+
+.projects-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 26px; }
+.project-card{
+  background: var(--bg-card); border-radius: 18px; padding: 26px;
+  border: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.project-card:hover{ transform: translateY(-8px); box-shadow: 0 16px 30px rgba(0,0,0,0.4); border-color: var(--accent-leaf); }
+.project-card h3{ color: var(--accent-cream); margin-bottom: 10px; }
+.project-card p{ color: var(--text-dim); font-size: 0.9rem; line-height:1.6; margin-bottom: 14px; }
+.tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+.tag{ font-size: 0.72rem; padding: 4px 10px; border-radius: 999px; background: rgba(162,89,255,0.15); color: var(--accent-leaf); }
+
+.timeline{ position:relative; padding-left: 30px; }
+.timeline::before{ content:''; position:absolute; left:6px; top:0; bottom:0; width:2px; background: rgba(162,89,255,0.3); }
+.timeline-item{ position:relative; margin-bottom: 40px; }
+.timeline-item::before{
+  content:''; position:absolute; left:-30px; top:4px; width:14px; height:14px;
+  border-radius:50%; background: var(--accent-amber); box-shadow: 0 0 0 4px rgba(26,188,254,0.2);
+}
+.timeline-item h3{ color: var(--accent-cream); margin-bottom:4px; }
+.timeline-item .meta{ color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px; }
+.timeline-item ul{ padding-left: 20px; color: var(--text-soft); font-size: 0.9rem; line-height:1.7; }
+
+#contact{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.contact-links{ display:flex; gap: 20px; margin-top: 30px; flex-wrap:wrap; justify-content:center; }
+.contact-links a{
+  color: var(--accent-cream); text-decoration:none; padding: 12px 24px;
+  border: 1px solid rgba(255,255,255,0.15); border-radius: 999px; font-size:0.9rem;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+.contact-links a:hover{ border-color: var(--accent-leaf); color: var(--accent-leaf); }
+
+@media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
+
+.section-more-link{
+  display: inline-block; margin-top: 36px; color: var(--accent-amber);
+  text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.3px;
+  border-bottom: 1px solid transparent; transition: border-color 0.25s ease, color 0.25s ease;
+  cursor:pointer;
+}
+.section-more-link:hover{ border-color: var(--accent-amber); color: var(--accent-cream); }
+
+.page-header{ max-width: 720px; margin-bottom: 60px; }
+.page-header .section-label{ margin-bottom: 14px; }
+.page-header h1{ font-size: clamp(2rem, 5vw, 3.2rem); color: var(--accent-cream); margin-bottom: 18px; line-height: 1.15; }
+.page-header .lede{ font-size: 1.05rem; line-height: 1.8; color: var(--text-soft); }
+.back-link{ color: var(--text-dim); text-decoration:none; font-size: 0.85rem; display:inline-block; margin-bottom: 24px; transition: color 0.25s ease; cursor:pointer; }
+.back-link:hover{ color: var(--accent-leaf); }
+
+.about-detail-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 60px; align-items:start; }
+.about-detail-grid p{ line-height:1.8; color: var(--text-soft); margin-bottom: 18px; }
+.pillar-list{ display:flex; flex-direction:column; gap: 22px; }
+.pillar{ background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 22px 24px; }
+.pillar h4{ color: var(--accent-cream); margin-bottom: 8px; font-size: 1rem; }
+.pillar p{ color: var(--text-dim); font-size: 0.9rem; line-height:1.65; margin-bottom:0; }
+.values-row{ display:flex; flex-wrap:wrap; gap: 12px; margin-top: 10px; }
+.value-pill{ padding: 8px 16px; border-radius: 999px; background: rgba(26,188,254,0.12); color: var(--accent-amber); font-size: 0.82rem; border: 1px solid rgba(26,188,254,0.25); }
+@media (max-width: 860px){ .about-detail-grid{ grid-template-columns: 1fr; } }
+
+.skill-matrix{ display:flex; flex-direction:column; gap: 36px; }
+.skill-row{ display:grid; grid-template-columns: 220px 1fr; gap: 24px; align-items:center; }
+.skill-row .skill-name{ color: var(--accent-cream); font-weight:600; font-size: 0.95rem; }
+.skill-row .skill-desc{ color: var(--text-dim); font-size: 0.82rem; margin-top: 4px; }
+.skill-bar-track{ height: 8px; border-radius: 999px; background: rgba(255,255,255,0.07); overflow:hidden; }
+.skill-bar-fill{ height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent-leaf), var(--accent-amber)); }
+@media (max-width: 700px){ .skill-row{ grid-template-columns: 1fr; } }
+.soft-skills-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 20px; margin-top: 20px; }
+.soft-skill-card{ background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; }
+.soft-skill-card h4{ color: var(--accent-cream); font-size: 0.95rem; margin-bottom: 8px; }
+.soft-skill-card p{ color: var(--text-dim); font-size: 0.85rem; line-height:1.6; }
+
+.case-study{ background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: 22px; padding: 40px; margin-bottom: 40px; }
+.case-study-head{ display:flex; justify-content:space-between; align-items:flex-start; gap: 20px; flex-wrap:wrap; margin-bottom: 24px; }
+.case-study-head h3{ color: var(--accent-cream); font-size: 1.5rem; }
+.case-study-head .tag-row{ margin-top: 10px; }
+.case-study-role{ color: var(--accent-amber); font-size: 0.8rem; text-transform:uppercase; letter-spacing:1.5px; white-space:nowrap; }
+.case-study-body{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 26px; }
+.case-study-block h5{ color: var(--accent-cream); font-size: 0.82rem; text-transform:uppercase; letter-spacing:1px; margin-bottom: 10px; }
+.case-study-block p, .case-study-block li{ color: var(--text-soft); font-size: 0.9rem; line-height:1.7; }
+.case-study-block ul{ padding-left: 18px; }
+.case-study-results{ display:flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07); }
+.result-stat .num{ font-size: 1.5rem; font-weight:700; color: var(--accent-extra); }
+.result-stat .lbl{ font-size: 0.78rem; color: var(--text-dim); margin-top: 2px; }
+
+.timeline-detailed .timeline-item{ background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: 18px; padding: 26px 28px; margin-left: 0; margin-bottom: 30px; }
+.timeline-detailed .timeline-item::before{ left: -36px; top: 30px; }
+.timeline-detailed{ padding-left: 30px; }
+.role-summary{ color: var(--text-soft); font-size: 0.9rem; line-height: 1.7; margin: 10px 0 14px; }
+.skills-gained{ display:flex; flex-wrap:wrap; gap:8px; margin-top: 14px; }
+.skills-gained .tag{ background: rgba(10,207,131,0.12); color: var(--accent-extra); }
+
+.contact-layout{ display:grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items:start; text-align:left; }
+.contact-form{
+  display:flex; flex-direction:column; gap: 18px;
+  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px; padding: 32px; backdrop-filter: blur(10px);
+}
+.form-field label{ display:block; font-size: 0.82rem; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 0.3px; }
+.form-field input, .form-field textarea{
+  width:100%; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.25); color: var(--text-soft); font-family: inherit; font-size: 0.9rem;
+  transition: border-color 0.25s ease;
+}
+.form-field input:focus, .form-field textarea:focus{ outline:none; border-color: var(--accent-leaf); }
+.form-field textarea{ resize: vertical; min-height: 120px; }
+.contact-side{ display:flex; flex-direction:column; gap: 24px; }
+.contact-info-card{
+  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 18px; padding: 24px; backdrop-filter: blur(10px);
+}
+.contact-info-card h4{ color: var(--accent-cream); font-size: 0.9rem; margin-bottom: 10px; }
+.contact-info-card p, .contact-info-card a{ color: var(--text-dim); font-size: 0.88rem; text-decoration:none; }
+.availability-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; background: var(--accent-extra); margin-right:8px; box-shadow: 0 0 0 3px rgba(10,207,131,0.2); }
+.form-success{ color: var(--accent-extra); font-size: 0.88rem; margin-top: 4px; }
+@media (max-width: 860px){ .contact-layout{ grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <a data-route="home" class="active">Home</a>
+  <a data-route="about">About</a>
+  <a data-route="skills">Skills</a>
+  <a data-route="projects">Projects</a>
+  <a data-route="experience">Experience</a>
+  <a data-route="contact">Contact</a>
+</nav>
+
+<!-- ================= HOME ================= -->
+<div class="page active" id="page-home">
+  <section id="hero">
+    <div class="greeting">Welcome — glad you're here</div>
+    <div class="hero-name">Shaik Safiudeen</div>
+    <div class="role-line">I design <span id="hero-role">user-centric interfaces</span></div>
+    <div class="cta-row">
+      <button class="btn primary" id="view-projects-btn">View Projects</button>
+      <button class="btn secondary">Download Resume</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="num">1+</div><div class="lbl">Years Experience</div></div>
+      <div class="stat"><div class="num">7+</div><div class="lbl">Projects Shipped</div></div>
+      <div class="stat"><div class="num">3</div><div class="lbl">Design Tools</div></div>
+    </div>
+    <div class="scroll-cue">↓ scroll to explore</div>
+  </section>
+
+  <section id="about">
+    <div class="section-label">About</div>
+    <h2 class="reveal">Get to know me</h2>
+    <div class="about-grid">
+      <div class="reveal">
+        <p>UI/UX Designer with over a year of experience designing user-centric web and mobile interfaces across agency, freelance, and self-driven projects.</p>
+        <p>Skilled in user research, wireframing, prototyping, and usability testing using Figma, Framer, and WixStudio — with a strong product-thinking mindset that turns user needs into functional, responsive digital products.</p>
+      </div>
+      <div class="info-list reveal">
+        <div><span>Name</span><span>Shaik Safiudeen</span></div>
+        <div><span>Role</span><span>UI/UX Designer</span></div>
+        <div><span>Location</span><span>Nagapattinam, Tamil Nadu</span></div>
+        <div><span>Email</span><span>safiudeen174@gmail.com</span></div>
+        <div><span>Phone</span><span>+91 9962088548</span></div>
+        <div><span>Education</span><span>B.Tech, CSBS — EGS Pillay Engineering College</span></div>
+        <a data-route="about" class="section-more-link" style="display:inline-block;margin-top:20px;">More about my story →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-label">Toolkit</div>
+    <h2 class="reveal">Tools &amp; process</h2>
+    <div class="skill-group reveal">
+      <h4>Design Tools</h4>
+      <div class="skills-grid">
+        <div class="skill-chip">Figma</div><div class="skill-chip">Framer</div><div class="skill-chip">WixStudio</div>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <h4>UX Process</h4>
+      <div class="skills-grid">
+        <div class="skill-chip">Wireframing</div><div class="skill-chip">Prototyping</div><div class="skill-chip">Usability Testing</div><div class="skill-chip">User Flows</div><div class="skill-chip">Responsive Design</div>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <h4>Other</h4>
+      <div class="skills-grid">
+        <div class="skill-chip">Mobile App UI</div><div class="skill-chip">Web Layout Design</div><div class="skill-chip">AI-assisted Design Workflows</div><div class="skill-chip">HTML/CSS basics</div>
+      </div>
+    </div>
+    <a data-route="skills" class="section-more-link reveal">See full skill breakdown →</a>
+  </section>
+
+  <section id="projects">
+    <div class="section-label">Work</div>
+    <h2 class="reveal">Selected projects</h2>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <h3>StudyCoach AI</h3>
+        <p>AI-driven career and study planning product for Indian college students — skill-gap detection, personalised roadmaps, and a burnout-aware planner, from research through high-fidelity prototype.</p>
+        <div class="tag-row"><span class="tag">Figma</span><span class="tag">UX Research</span></div>
+      </div>
+      <div class="project-card reveal">
+        <h3>BuildQuick</h3>
+        <p>13-screen B2B mobile app for construction material procurement — bulk ordering, real-time delivery tracking, and OTP-secured access, designed around site-manager workflows.</p>
+        <div class="tag-row"><span class="tag">Figma</span><span class="tag">Mobile UI</span></div>
+      </div>
+      <div class="project-card reveal">
+        <h3>The Spot</h3>
+        <p>Digital menu UI for a food court, focused on clear food categorisation and an inviting, appetite-driving visual layout, optimised for screen and print.</p>
+        <div class="tag-row"><span class="tag">Figma</span><span class="tag">Visual Design</span></div>
+      </div>
+    </div>
+    <a data-route="projects" class="section-more-link reveal">See full case studies →</a>
+  </section>
+
+  <section id="experience">
+    <div class="section-label">Path</div>
+    <h2 class="reveal">Where I've worked</h2>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <h3>UI/UX Designer @ Femtosoft Technologies</h3>
+        <div class="meta">2025 — Present</div>
+        <ul><li>Designing user interfaces and experiences for ongoing product/client work — details to be filled in.</li><li>Add specific responsibilities, tools used, or outcomes here once you share them.</li></ul>
+      </div>
+      <div class="timeline-item">
+        <h3>UI/UX Designer @ Zuntra Digital</h3>
+        <div class="meta">2024 — 2025</div>
+        <ul><li>Designed end-to-end UI/UX for 5 client projects, from user research and wireframing through to high-fidelity Figma prototypes.</li><li>Collaborated with developers and product owners to translate user requirements into responsive, accessible interfaces.</li><li>Ran usability tests on prototypes and iterated designs to improve task completion and navigation flow.</li></ul>
+      </div>
+      <div class="timeline-item">
+        <h3>Jr. Framer Designer @ Coders Boutique</h3>
+        <div class="meta">Jan — Apr 2025</div>
+        <ul><li>Designed and developed responsive landing pages in Framer with interactive components, balancing visual design with performance.</li><li>Translated high-fidelity UI mockups into functional, production-ready web experiences.</li></ul>
+      </div>
+      <div class="timeline-item">
+        <h3>UI Designer (Freelance) — Self-employed</h3>
+        <div class="meta">2024 — Present</div>
+        <ul><li>Designed the complete UI for a responsive food court ordering website in Figma, mapping flows from menu browsing to order placement.</li><li>Maintained a structured design system for a consistent experience across mobile and desktop breakpoints.</li></ul>
+      </div>
+      <div class="timeline-item">
+        <h3>B.Tech, Computer Science &amp; Business Systems</h3>
+        <div class="meta">2020 — 2024 · EGS Pillay Engineering College, Nagapattinam · CGPA 7.85</div>
+      </div>
+    </div>
+    <a data-route="experience" class="section-more-link reveal">See detailed experience →</a>
+  </section>
+
+  <section id="contact">
+    <div class="section-label">Connect</div>
+    <h2 class="reveal">Let's talk</h2>
+    <p class="reveal" style="color:var(--text-dim);max-width:400px;">Got a project in mind? Reach out through any of these.</p>
+    <div class="contact-links reveal">
+      <a href="mailto:safiudeen174@gmail.com">Email</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Portfolio</a>
+    </div>
+    <a data-route="contact" class="section-more-link reveal" style="margin-top:24px;">Or send a message directly →</a>
+  </section>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div class="page" id="page-about">
+  <section id="about-page">
+    <a data-route="home" class="back-link">← Back to home</a>
+    <div class="page-header reveal">
+      <div class="section-label">About</div>
+      <h1>The story behind the screens</h1>
+      <p class="lede">I'm a UI/UX designer based in Nagapattinam, Tamil Nadu, one year and change into a career built on a simple belief: good design is invisible until it isn't there. My job is to make sure people never have to think about the interface — only about what they came to do.</p>
+    </div>
+    <div class="about-detail-grid">
+      <div class="reveal">
+        <p>I started out as a Computer Science &amp; Business Systems student, which means I came into design already comfortable with how software actually gets built. That background shapes how I work — I don't hand off static mockups and hope for the best, I design with implementation, edge cases, and data states in mind from the first wireframe.</p>
+        <p>My first real design job was freelance: a food court ordering system that needed to work for people scanning a menu on their phone mid-queue. That project taught me the lesson that's stuck with me since — constraints make better designers than freedom does. From there I moved into an agency-style role at Zuntra Digital, then Coders Boutique, shipping client work across five-plus projects, and I currently design product experiences at Femtosoft Technologies.</p>
+        <p>Outside of client work, I use self-directed projects like StudyCoach AI and BuildQuick to explore harder problems — AI-assisted planning, B2B workflows — that don't usually show up in agency briefs. It's how I keep growing past whatever a given job asks of me.</p>
+        <div class="values-row">
+          <span class="value-pill">Curiosity</span><span class="value-pill">Clarity over cleverness</span><span class="value-pill">Fast iteration</span><span class="value-pill">Honest feedback</span><span class="value-pill">Ownership</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="pillar-list">
+          <div class="pillar"><h4>Research before pixels</h4><p>I don't open Figma until I understand who's using the thing and what they're trying to get done. Assumptions get tested, not shipped.</p></div>
+          <div class="pillar"><h4>Systems, not screens</h4><p>Every interface I design is built from a component system underneath — consistent spacing, typography, and states — so it scales instead of splintering.</p></div>
+          <div class="pillar"><h4>Design that ships</h4><p>My CS background means I design with real constraints in mind: loading states, empty states, error states, and how components actually map to code.</p></div>
+          <div class="pillar"><h4>Education</h4><p>B.Tech, CSBS — EGS Pillay Engineering College · CGPA 7.85 (2020 — 2024)</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= SKILLS ================= -->
+<div class="page" id="page-skills">
+  <section id="skills-page">
+    <a data-route="home" class="back-link">← Back to home</a>
+    <div class="page-header reveal">
+      <div class="section-label">Toolkit</div>
+      <h1>How I actually work</h1>
+      <p class="lede">A breakdown of the tools I reach for daily, the process skills that shape how I approach a brief, and the softer skills that come from a year of client and product work — not just a list of software names.</p>
+    </div>
+    <div class="skill-group reveal">
+      <h4>Design Tools</h4>
+      <div class="skill-matrix">
+        <div class="skill-row"><div><div class="skill-name">Figma</div><div class="skill-desc">Auto layout, variants, component libraries, dev mode handoff.</div></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+        <div class="skill-row"><div><div class="skill-name">Framer</div><div class="skill-desc">Interactive, production-ready landing pages and micro-interactions.</div></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div></div>
+        <div class="skill-row"><div><div class="skill-name">WixStudio</div><div class="skill-desc">Rapid client site builds with custom responsive layouts.</div></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:65%"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <h4>UX Process</h4>
+      <div class="skill-matrix">
+        <div class="skill-row"><div><div class="skill-name">User Research</div><div class="skill-desc">Interviews, usability testing, and synthesis into actionable insight.</div></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%"></div></div></div>
+        <div class="skill-row"><div><div class="skill-name">Wireframing & IA</div><div class="skill-desc">Structuring flows before visuals — especially for multi-step products.</div></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div></div>
+        <div class="skill-row"><div><div class="skill-name">Prototyping</div><div class="skill-desc">High-fidelity, testable prototypes that closely mirror final behavior.</div></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+        <div class="skill-row"><div><div class="skill-name">Responsive Design</div><div class="skill-desc">Designing breakpoints as a system, not an afterthought.</div></div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <h4>Working Style</h4>
+      <div class="soft-skills-grid">
+        <div class="soft-skill-card"><h4>Client communication</h4><p>Comfortable presenting rationale directly to non-design stakeholders and defending decisions with reasoning, not opinion.</p></div>
+        <div class="soft-skill-card"><h4>Dev collaboration</h4><p>CS background means smoother handoff — I speak enough front-end to have real conversations with engineers.</p></div>
+        <div class="soft-skill-card"><h4>Fast iteration</h4><p>Used to short feedback loops from agency work — I'd rather show three rough directions than one polished guess.</p></div>
+        <div class="soft-skill-card"><h4>Self-direction</h4><p>Freelance and side projects have trained me to scope, prioritize, and finish without someone else setting the brief.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= PROJECTS ================= -->
+<div class="page" id="page-projects">
+  <section id="projects-page">
+    <a data-route="home" class="back-link">← Back to home</a>
+    <div class="page-header reveal">
+      <div class="section-label">Work</div>
+      <h1>Case studies</h1>
+      <p class="lede">Full write-ups of how each project actually went — the problem behind the brief, how I worked through it, and what shipped. Not just final screens.</p>
+    </div>
+
+    <div class="case-study reveal">
+      <div class="case-study-head">
+        <div><h3>StudyCoach AI</h3><div class="tag-row"><span class="tag">Figma</span><span class="tag">UX Research</span><span class="tag">AI/UX</span></div></div>
+        <div class="case-study-role">Product Designer (Solo)</div>
+      </div>
+      <div class="case-study-body">
+        <div class="case-study-block"><h5>Overview</h5><p>An AI-driven career and study planning product built for Indian college students juggling coursework, competitive exams, and career uncertainty at the same time.</p></div>
+        <div class="case-study-block"><h5>Problem</h5><p>Students had access to endless study resources but no single place that adapted to their actual schedule, skill gaps, or burnout risk — most planning tools assumed unlimited time and motivation.</p></div>
+        <div class="case-study-block"><h5>Process</h5><ul><li>Interviewed students across engineering and arts colleges to map real weekly routines, not idealized ones.</li><li>Mapped a skill-gap detection flow that compares a student's stated goals against their current progress.</li><li>Prototyped a burnout-aware planner that adjusts workload suggestions based on self-reported energy, not just deadlines.</li><li>Ran informal usability passes with 6 students to catch friction in onboarding and daily check-ins.</li></ul></div>
+        <div class="case-study-block"><h5>Solution</h5><p>A guided onboarding that builds a personalised roadmap in under 3 minutes, plus a daily planner that re-balances itself when a student falls behind instead of just piling on guilt.</p></div>
+      </div>
+      <div class="case-study-results">
+        <div class="result-stat"><div class="num">3 min</div><div class="lbl">Avg. onboarding time</div></div>
+        <div class="result-stat"><div class="num">6</div><div class="lbl">Students in usability round</div></div>
+        <div class="result-stat"><div class="num">12</div><div class="lbl">Screens prototyped</div></div>
+      </div>
+    </div>
+
+    <div class="case-study reveal">
+      <div class="case-study-head">
+        <div><h3>BuildQuick</h3><div class="tag-row"><span class="tag">Figma</span><span class="tag">Mobile UI</span><span class="tag">B2B</span></div></div>
+        <div class="case-study-role">UI/UX Designer</div>
+      </div>
+      <div class="case-study-body">
+        <div class="case-study-block"><h5>Overview</h5><p>A 13-screen B2B mobile app for construction material procurement, designed for site managers ordering materials from job sites, not offices.</p></div>
+        <div class="case-study-block"><h5>Problem</h5><p>Site managers were placing bulk orders over phone calls and WhatsApp, with no reliable way to track delivery status or verify who was authorized to approve an order.</p></div>
+        <div class="case-study-block"><h5>Process</h5><ul><li>Shadowed the procurement workflow to understand where phone-call ordering broke down.</li><li>Designed an OTP-secured approval flow so only authorized site managers could confirm large orders.</li><li>Built a real-time delivery tracking screen prioritizing status clarity over visual complexity — usable in bright outdoor light.</li><li>Structured bulk ordering around material categories site managers already used mentally, not a generic e-commerce grid.</li></ul></div>
+        <div class="case-study-block"><h5>Solution</h5><p>A focused 13-screen flow covering browse → bulk order → OTP approval → live tracking, designed for one-handed use on a job site with a cracked-screen mid-range phone in mind.</p></div>
+      </div>
+      <div class="case-study-results">
+        <div class="result-stat"><div class="num">13</div><div class="lbl">Screens designed</div></div>
+        <div class="result-stat"><div class="num">OTP</div><div class="lbl">Secured approval flow</div></div>
+        <div class="result-stat"><div class="num">1-hand</div><div class="lbl">Use optimized</div></div>
+      </div>
+    </div>
+
+    <div class="case-study reveal">
+      <div class="case-study-head">
+        <div><h3>The Spot</h3><div class="tag-row"><span class="tag">Figma</span><span class="tag">Visual Design</span></div></div>
+        <div class="case-study-role">UI Designer</div>
+      </div>
+      <div class="case-study-body">
+        <div class="case-study-block"><h5>Overview</h5><p>A digital menu interface for a food court, replacing a cluttered printed board with a browsable, appetite-driving screen and print-ready layout.</p></div>
+        <div class="case-study-block"><h5>Problem</h5><p>The original printed menu buried popular items among dozens of categories, and had no digital counterpart for in-app or kiosk ordering.</p></div>
+        <div class="case-study-block"><h5>Process</h5><ul><li>Audited the existing printed menu to identify which categories actually drove orders.</li><li>Reorganized items into clearer categories, with visual hierarchy prioritizing bestsellers.</li><li>Designed a layout that works identically well on a kiosk screen and as a printable PDF, avoiding two separate design efforts.</li></ul></div>
+        <div class="case-study-block"><h5>Solution</h5><p>A clean, appetite-forward menu system with consistent visual rules for categorisation, pricing, and imagery — built once, deployed to screen and print.</p></div>
+      </div>
+      <div class="case-study-results">
+        <div class="result-stat"><div class="num">2-in-1</div><div class="lbl">Screen + print system</div></div>
+        <div class="result-stat"><div class="num">100%</div><div class="lbl">Menu items recategorized</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= EXPERIENCE ================= -->
+<div class="page" id="page-experience">
+  <section id="experience-page">
+    <a data-route="home" class="back-link">← Back to home</a>
+    <div class="page-header reveal">
+      <div class="section-label">Path</div>
+      <h1>The full timeline</h1>
+      <p class="lede">Every role, what it actually involved, and what I took from it — from freelance beginnings to agency work to where I am now.</p>
+    </div>
+    <div class="timeline timeline-detailed reveal">
+      <div class="timeline-item">
+        <h3>UI/UX Designer @ Femtosoft Technologies</h3>
+        <div class="meta">2025 — Present</div>
+        <p class="role-summary">Currently designing interfaces and product experiences in an ongoing role, continuing to build on the research-driven, systems-first approach developed across earlier client work.</p>
+        <ul><li>Designing user interfaces and experiences for ongoing product/client work — details to be filled in.</li><li>Add specific responsibilities, tools used, or outcomes here once you share them.</li></ul>
+        <div class="skills-gained"><span class="tag">Product thinking</span><span class="tag">Cross-functional collaboration</span></div>
+      </div>
+      <div class="timeline-item">
+        <h3>UI/UX Designer @ Zuntra Digital</h3>
+        <div class="meta">2024 — 2025</div>
+        <p class="role-summary">Owned end-to-end design across five client engagements, running the full process from discovery through delivery-ready prototypes, while working directly with developers to keep designs implementation-realistic.</p>
+        <ul><li>Designed end-to-end UI/UX for 5 client projects, from user research and wireframing through to high-fidelity Figma prototypes.</li><li>Collaborated with developers and product owners to translate user requirements into responsive, accessible interfaces.</li><li>Ran usability tests on prototypes and iterated designs to improve task completion and navigation flow.</li></ul>
+        <div class="skills-gained"><span class="tag">Client management</span><span class="tag">Usability testing</span><span class="tag">Accessible design</span></div>
+      </div>
+      <div class="timeline-item">
+        <h3>Jr. Framer Designer @ Coders Boutique</h3>
+        <div class="meta">Jan — Apr 2025</div>
+        <p class="role-summary">A focused stint building interactive, production-ready landing pages, learning to balance visual polish against real performance constraints in a no-code/low-code build environment.</p>
+        <ul><li>Designed and developed responsive landing pages in Framer with interactive components, balancing visual design with performance.</li><li>Translated high-fidelity UI mockups into functional, production-ready web experiences.</li></ul>
+        <div class="skills-gained"><span class="tag">Framer development</span><span class="tag">Performance-conscious design</span></div>
+      </div>
+      <div class="timeline-item">
+        <h3>UI Designer (Freelance) @ Self-employed</h3>
+        <div class="meta">2024 — Present</div>
+        <p class="role-summary">Independent client work, including a full ordering-flow redesign for a food court business, maintained as an ongoing design system rather than a one-off delivery.</p>
+        <ul><li>Designed the complete UI for a responsive food court ordering website in Figma, mapping flows from menu browsing to order placement.</li><li>Maintained a structured design system for a consistent experience across mobile and desktop breakpoints.</li></ul>
+        <div class="skills-gained"><span class="tag">Scoping & pricing work</span><span class="tag">Design systems</span><span class="tag">Client communication</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div class="page" id="page-contact">
+  <section id="contact-page">
+    <a data-route="home" class="back-link">← Back to home</a>
+    <div class="page-header reveal">
+      <div class="section-label">Connect</div>
+      <h1>Let's build something</h1>
+      <p class="lede">Have a project, a role, or just a question about how something was designed? Send a message directly, or reach out through any of the links below.</p>
+    </div>
+    <div class="contact-layout reveal">
+      <form class="contact-form" id="contact-form">
+        <div class="form-field"><label for="name">Name</label><input id="name" name="name" required /></div>
+        <div class="form-field"><label for="email">Email</label><input id="email" name="email" type="email" required /></div>
+        <div class="form-field"><label for="message">Message</label><textarea id="message" name="message" required></textarea></div>
+        <button type="submit" class="btn primary" style="align-self:flex-start;">Send message</button>
+        <p class="form-success" id="form-success" style="display:none;"></p>
+      </form>
+      <div class="contact-side">
+        <div class="contact-info-card"><h4><span class="availability-dot"></span>Currently</h4><p>Open to new roles and freelance projects.</p></div>
+        <div class="contact-info-card"><h4>Direct</h4><p><a href="mailto:safiudeen174@gmail.com">safiudeen174@gmail.com</a><br />+91 9962088548<br />Nagapattinam, Tamil Nadu</p></div>
+        <div class="contact-info-card"><h4>Elsewhere</h4><div class="contact-links" style="margin-top:0;justify-content:flex-start;"><a href="mailto:safiudeen174@gmail.com">Email</a><a href="#">LinkedIn</a><a href="#">Portfolio</a></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ---------- 1. Animated 3D background ---------- */
+function initBackground3D() {
+  const canvas = document.getElementById('bg-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.z = 6;
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const geometry = new THREE.IcosahedronGeometry(2, 1);
+  const material = new THREE.MeshBasicMaterial({ color: 0xa259ff, wireframe: true, transparent: true, opacity: 0.55 });
+  const mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+  const pointsGeo = new THREE.BufferGeometry();
+  const pointCount = 200;
+  const positions = new Float32Array(pointCount * 3);
+  for (let i = 0; i < pointCount; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 10;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+  }
+  pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const pointsMat = new THREE.PointsMaterial({ color: 0x1abcfe, size: 0.035, transparent: true, opacity: 0.5 });
+  const starField = new THREE.Points(pointsGeo, pointsMat);
+  scene.add(starField);
+
+  const colorStops = [0xa259ff, 0x1abcfe, 0x0acf83, 0xff7262, 0xa259ff, 0x1abcfe];
+  const tmpColorA = new THREE.Color();
+  const tmpColorB = new THREE.Color();
+  function lerpColorHex(c1, c2, t) {
+    tmpColorA.set(c1); tmpColorB.set(c2); tmpColorA.lerp(tmpColorB, t); return tmpColorA;
+  }
+
+  let scrollProgress = 0;
+  function updateScrollProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress = docHeight > 0 ? scrollTop / docHeight : 0;
+  }
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const segments = colorStops.length - 1;
+    const scaled = scrollProgress * segments;
+    const idx = Math.min(Math.floor(scaled), segments - 1);
+    const t = scaled - idx;
+    const color = lerpColorHex(colorStops[idx], colorStops[idx + 1], t);
+    material.color.copy(color);
+    pointsMat.color.copy(color);
+    mesh.rotation.y = scrollProgress * Math.PI * 4 + mouseX * 0.3;
+    mesh.rotation.x = scrollProgress * Math.PI * 2 + mouseY * 0.3;
+    starField.rotation.y = scrollProgress * Math.PI * 1.5;
+    const scale = 0.8 + Math.sin(scrollProgress * Math.PI) * 0.5;
+    mesh.scale.set(scale, scale, scale);
+    camera.position.z = 6 - scrollProgress * 2;
+    camera.position.x = mouseX * 0.4;
+    camera.position.y = -mouseY * 0.4;
+    camera.lookAt(0, 0, 0);
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+}
+
+/* ---------- 2. Scroll-reveal ---------- */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+
+function observeRevealsIn(container) {
+  container.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+}
+
+/* ---------- 3. Hash-based router (keeps everything in one file) ---------- */
+function showRoute(route) {
+  const valid = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+  if (!valid.includes(route)) route = 'home';
+
+  document.querySelectorAll('.page').forEach((p) => p.classList.remove('active'));
+  const target = document.getElementById('page-' + route);
+  target.classList.add('active');
+
+  document.querySelectorAll('nav a[data-route]').forEach((a) => {
+    a.classList.toggle('active', a.getAttribute('data-route') === route);
+  });
+
+  window.scrollTo(0, 0);
+  observeRevealsIn(target);
+}
+
+function currentRouteFromHash() {
+  return (location.hash || '#home').replace('#', '') || 'home';
+}
+
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('[data-route]');
+  if (!link) return;
+  e.preventDefault();
+  const route = link.getAttribute('data-route');
+  if (location.hash.replace('#', '') === route) {
+    showRoute(route);
+  } else {
+    location.hash = route;
+  }
+});
+
+window.addEventListener('hashchange', () => showRoute(currentRouteFromHash()));
+
+/* ---------- 4. Hero rotating role text ---------- */
+function initHeroRoles() {
+  const el = document.getElementById('hero-role');
+  if (!el) return;
+  const roles = ['user-centric interfaces', 'responsive web & mobile UI', 'research-driven products', 'high-fidelity prototypes'];
+  let i = 0;
+  setInterval(() => {
+    el.style.opacity = 0;
+    setTimeout(() => { i = (i + 1) % roles.length; el.textContent = roles[i]; el.style.opacity = 1; }, 300);
+  }, 2400);
+}
+
+/* ---------- 5. "View Projects" smooth-scroll button ---------- */
+function initHeroCta() {
+  const btn = document.getElementById('view-projects-btn');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
+/* ---------- 6. Contact form (no backend wired up yet) ---------- */
+function initContactForm() {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+  const successMsg = document.getElementById('form-success');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nameValue = form.querySelector('#name').value.trim();
+    const firstName = nameValue.split(' ')[0] || 'there';
+    successMsg.textContent = `Thanks, ${firstName} — this form isn't wired to an inbox yet, but it's ready to connect to one.`;
+    successMsg.style.display = 'block';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initBackground3D();
+  initHeroRoles();
+  initHeroCta();
+  initContactForm();
+  showRoute(currentRouteFromHash());
+});
+</script>
+</body>
+</html>
